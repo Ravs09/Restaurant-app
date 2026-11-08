@@ -1,17 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
 import Home from "./pages/Home";
+import Menu from "./pages/Menu"; // <--- আসল Menu পেজ ইমপোর্ট করা হলো
 
-// Temporary placeholder pages for other routes
-function Menu() {
-  return (
-    <div className="py-24 text-center">
-      <h1 className="text-4xl font-extrabold">Our Menu</h1>
-      <p className="mt-4 text-gray-600">Browse delicious meals and order online.</p>
-    </div>
-  );
-}
-
+// Temporary placeholder pages for remaining routes
 function Reservations() {
   return (
     <div className="py-24 text-center">

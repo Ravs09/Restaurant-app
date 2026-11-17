@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import FoodCard from "../components/food/FoodCard";
+import { useCart } from "../context/CartContext";
 import { Search, SlidersHorizontal, Utensils, AlertCircle } from "lucide-react";
 
 // Mock Food Items (Later fetched from Supabase)
@@ -144,11 +145,13 @@ export default function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("default");
+  
+  const { addToCart } = useCart(); // <-- কার্ট ফাংশন
 
-  // Handler for adding to cart (placeholder until CartContext is built)
   const handleAddToCart = (food) => {
-    alert(`"${food.name}" added to cart!`);
+    addToCart(food);
   };
+
 
   // Filter and Sort Logic using useMemo for high performance
   const filteredFoods = useMemo(() => {

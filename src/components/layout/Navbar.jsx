@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 import { 
   UtensilsCrossed, 
   ShoppingBag, 
@@ -10,8 +11,8 @@ import {
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { totalItemsCount } = useCart(); // ডায়নামিক কার্ট কাউন্ট
 
-  // English Navigation Links
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Menu", path: "/menu" },
@@ -20,7 +21,6 @@ export default function Navbar() {
     { name: "Contact", path: "/contact" },
   ];
 
-  // Active Link Styling
   const getNavLinkClass = ({ isActive }) =>
     `font-medium transition-colors hover:text-primary ${
       isActive ? "text-primary border-b-2 border-primary pb-1" : "text-gray-600"
@@ -31,7 +31,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Logo & Branding */}
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-2 text-2xl font-black text-primary">
             <span className="p-2 bg-primary/10 rounded-xl text-primary">
               <UtensilsCrossed size={28} />
@@ -41,7 +41,7 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Links */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <NavLink
@@ -54,23 +54,25 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right Action Buttons */}
+          {/* Right Actions */}
           <div className="flex items-center gap-3">
-            {/* Cart Icon & Badge */}
+            {/* Cart Icon with Live Badge */}
             <Link to="/cart" className="btn btn-ghost btn-circle relative" title="Shopping Cart">
               <ShoppingBag size={22} className="text-gray-700" />
-              <span className="badge badge-sm badge-primary absolute top-1 right-1 font-bold">
-                0
-              </span>
+              {totalItemsCount > 0 && (
+                <span className="badge badge-sm badge-primary absolute top-1 right-1 font-bold animate-pulse">
+                  {totalItemsCount}
+                </span>
+              )}
             </Link>
 
-            {/* Login Button */}
+            {/* Login */}
             <Link to="/login" className="btn btn-primary btn-sm md:btn-md hidden sm:flex gap-2">
               <User size={18} />
               <span>Login</span>
             </Link>
 
-            {/* Mobile Hamburger Button */}
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="btn btn-ghost btn-square md:hidden"
@@ -82,7 +84,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-base-100 border-t border-base-200 px-4 pt-3 pb-6 space-y-3 shadow-lg">
           {navLinks.map((link) => (
